@@ -1,0 +1,80 @@
+* {
+  box-sizing: border-box;
+  outline: none;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  /* Prevent adjustments of font size after orientation changes in IE and iOS. */
+  -ms-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  /* -webkit-font-smoothing: antialiased; */
+  /* text-rendering: optimizeLegibility; */
+  font-family: -apple-system, system-ui, "Segoe UI", Roboto, Ubuntu, Oxygen, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  letter-spacing: normal;
+  text-align: left;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+}
+
+a {
+  background-color: transparent;
+  text-decoration: none;
+}
+
+a:active, a:hover {
+  cursor: pointer;
+  text-decoration-skip: ink;
+}
+
+hr {
+  background-color: transparent;
+  margin: 15px 0;
+  width: 100%;
+  border-width: 0;
+  border-color: transparent;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+ul > li {
+  margin: 0;
+  padding: 0;
+}
+
+h1, h2, h3, h4, h5, h6, p {
+  font-weight: normal;
+  margin: 0;
+}
+
+small {
+  font-size: 80%;
+}
+
+img {
+  border-style: none;
+}
+
+svg:not(:root) {
+  overflow: hidden;
+}
+
+code,
+kbd,
+pre,
+samp {
+  font-family: monospace, monospace;
+}
+
+textarea {
+  overflow: auto;
+}
