@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
 import { withRouter } from 'react-router-dom'
-import { Flex } from '@hqro/gojji'
 import debounce from 'lodash/debounce'
 import get from 'lodash/get'
 
+import { Flex } from 'components'
 import { connect } from 'helpers'
 import { Router } from 'containers'
 import { types, initialValues } from 'constants'

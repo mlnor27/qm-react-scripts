@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
-import { Flex } from '@hqro/gojji'
 import get from 'lodash/get'
 
+import { Flex } from 'components'
 import { initialValues, types } from 'constants'
 import { connect } from 'helpers'
 

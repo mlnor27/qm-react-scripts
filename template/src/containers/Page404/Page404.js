@@ -1,6 +1,6 @@
 import React from 'react'
-import { Flex } from '@hqro/gojji'
 
+import { Flex } from 'components'
 import styles from './Page404.module.scss'
 
 const Page404 = () => (

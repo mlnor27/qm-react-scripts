@@ -152,7 +152,7 @@ module.exports = function(
   }
 
 
-  const command = useYarn ? 'yarn' : 'npm'
+  const command = useYarn ? 'yarn' : 'npm';
   const args = (useYarn ? ['add', '--ignore-engines'] : ['install', '--save', verbose && '--verbose'])
     .concat(
       'react',
@@ -165,12 +165,11 @@ module.exports = function(
       'redux',
       'redux-thunk',
       'classnames',
-      '@hqro/gojji',
-    )
+    );
   const devArgs = (useYarn ? ['add', '--dev', '--ignore-engines'] : ['install', '--save-dev', verbose && '--verbose'])
     .concat(
       'prop-types',
-    )
+    );
 
   // Install additional template dependencies, if present
   const templateDependenciesPath = path.join(
