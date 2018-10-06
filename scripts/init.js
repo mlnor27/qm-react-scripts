@@ -151,29 +151,26 @@ module.exports = function(
     }
   }
 
-  let command;
-  let args;
 
-  if (useYarn) {
-    command = 'yarnpkg';
-    args = ['add'];
-  } else {
-    command = 'npm';
-    args = ['install', '--save', verbose && '--verbose'].filter(e => e);
-  }
-  args.push(
-    'react',
-    'react-dom',
-    'lodash',
-    'react-redux',
-    'react-router-dom',
-    'connected-react-router',
-    'history',
-    'redux',
-    'redux-thunk',
-    'classnames',
-    'prop-types',
-  );
+  const command = useYarn ? 'yarn' : 'npm'
+  const args = (useYarn ? ['add', '--ignore-engines'] : ['install', '--save', verbose && '--verbose'])
+    .concat(
+      'react',
+      'react-dom',
+      'lodash',
+      'react-redux',
+      'react-router-dom',
+      'connected-react-router',
+      'history',
+      'redux',
+      'redux-thunk',
+      'classnames',
+      '@hqro/gojji',
+    )
+  const devArgs = (useYarn ? ['add', '--dev', '--ignore-engines'] : ['install', '--save-dev', verbose && '--verbose'])
+    .concat(
+      'prop-types',
+    )
 
   // Install additional template dependencies, if present
   const templateDependenciesPath = path.join(
@@ -187,21 +184,27 @@ module.exports = function(
         return `${key}@${templateDependencies[key]}`;
       })
     );
+    devArgs = devArgs.concat(
+      Object.keys(devDependencies).map(key => {
+        return `${key}@${devDependencies[key]}`;
+      })
+    );
     fs.unlinkSync(templateDependenciesPath);
   }
 
-  // Install react and react-dom for backward compatibility with old CRA cli
-  // which doesn't install react and react-dom along with react-scripts
-  // or template is presetend (via --internal-testing-template)
-  if (!isReactInstalled(appPackage) || template) {
-    console.log(`Installing react and react-dom using ${command}...`);
-    console.log();
+  console.log(`Installing dependencies using ${command}...`)
 
-    const proc = spawn.sync(command, args, { stdio: 'inherit' });
-    if (proc.status !== 0) {
-      console.error(`\`${command} ${args.join(' ')}\` failed`);
-      return;
-    }
+  const dependenciesInstall = spawn.sync(command, args, { stdio: 'inherit' });
+  const devDependenciesInstall = spawn.sync(command, devArgs, { stdio: 'inherit' });
+
+  if (dependenciesInstall.status !== 0) {
+    console.error(`"${command} ${args.join(' ')}" failed`);
+    return;
+  }
+
+  if (devDependenciesInstall.status !== 0) {
+    console.error(`"${command} ${devArgs.join(' ')}" failed`);
+    return;
   }
 
   if (tryGitInit(appPath)) {
@@ -262,12 +265,3 @@ module.exports = function(
   console.log();
   console.log('Happy hacking!');
 };
-
-function isReactInstalled(appPackage) {
-  const dependencies = appPackage.dependencies || {};
-
-  return (
-    typeof dependencies.react !== 'undefined' &&
-    typeof dependencies['react-dom'] !== 'undefined'
-  );
-}
